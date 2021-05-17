@@ -7,7 +7,7 @@ router.get("/", function (req, res, next) {
 });
 
 //ADD comment
-router.patch("/edit/:id", (req, res) => {
+router.patch("/comments/:id", (req, res) => {
   const { id } = req.params;
   const { comment } = req.body;
   const newComment = { comment };
@@ -16,9 +16,19 @@ router.patch("/edit/:id", (req, res) => {
   res.send(posts[index]);
 });
 
+//Remove Comment
+router.delete("/comments/:id", (req, res) => {
+  const { id } = req.params;
+  const index = posts.findIndex((post) => post.id === +id);
+  if (!posts[index].comment) {
+    console.log("comments are empty");
+  }
+  delete posts[index].comment;
+  res.send(posts);
+});
+
 //View List
 router.get("/list", (req, res) => {
-  console.log(this.posts);
   res.send(posts);
 });
 
